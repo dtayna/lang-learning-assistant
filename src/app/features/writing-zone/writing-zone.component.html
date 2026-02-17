@@ -1,1 +1,47 @@
-<p>writing-zone works!</p>
+<h1 class="page-title">Writing Zone</h1>
+<section class="bg-white m-10 rounded-md p-5 text-sky-900">
+    <form class="flex flex-col gap-5" [formGroup]="noteForm" (ngSubmit)="onSubmit()">
+        <div class="grid grid-cols-12 gap-5">
+            <div class="col-span-12">
+                <label class="input-label" for="title"> Title: </label>
+                <input class="input-text" name="title" formControlName="title" type="text" placeholder="Add new word..." >
+            </div>
+            <div class="col-span-12">
+                <label class="input-label" for="text"> <span class="text-red-500">*</span> Text: </label>
+                <textarea class="input-text" name="text" formControlName="text" placeholder="Add word meaning..."></textarea>
+            </div>
+        </div>
+        <div class="flex gap-5 justify-end">
+            <button class="cancel-button" type="button"> Cancel </button>
+            <button class="submit-button" type="submit"> Add Note </button>
+        </div>
+    </form>
+</section>
+
+<section class="bg-white m-10 rounded-md p-5 text-sky-900">
+    <table class="w-full">
+        <thead>
+            <tr class="text-left text-white bg-sky-700">
+                <th class="border p-5 border-gray-200">Title</th>
+                <th class="border p-5 border-gray-200">Text</th>
+                <th class="border p-5 border-gray-200">Created At</th>
+                <th class="border p-5 border-gray-200">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (note of notes; track note.id) {
+                <tr class="border rounded-md border-gray-100">
+                    <td class="p-3 font-bold bg-sky-100">{{ note.title }}</td>
+                    <td class="p-3">{{ note.text }}</td>
+                    <td class="p-3">{{ note.created_at ? (note.created_at | date:'dd/MM/yyyy HH:mm') : '--' }}</td>
+                    <td class="text-center">
+                        <button class="items-center justify-center" (click)="onDelete(note.id)"> 
+                            <mat-icon fontIcon="delete" class="delete-icon"></mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            }  
+        </tbody>
+    </table>
+
+</section>
