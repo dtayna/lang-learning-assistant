@@ -1,31 +1,31 @@
 <h1 class="page-title">My Words</h1>
 <section class="bg-white m-10 rounded-md p-5 text-sky-900">
-    <form class="flex flex-col gap-5">
+    <form class="flex flex-col gap-5" [formGroup]="wordForm" (ngSubmit)="onSubmit()">
         <div class="grid grid-cols-12 gap-5">
             <div class="col-span-12 lg:col-span-6">
                 <label class="input-label" for="word"> Word: </label>
-                <input class="input-text" name="word" type="text" placeholder="Add new word..." >
+                <input class="input-text" name="word" formControlName="word" type="text" placeholder="Add new word..." >
             </div>
             <div class="col-span-12 lg:col-span-6">
                 <label class="input-label" for="translation"> Translation:</label>
-                <input class="input-text" name="translation" type="text" placeholder="Add word translation..." >
+                <input class="input-text" name="translation"  formControlName="translation" type="text" placeholder="Add word translation..." >
             </div>
         </div>
         <div class="grid grid-cols-12">
             <div class="col-span-12">
                 <label class="input-label" for="meaning"> Meaning: </label>
-                <textarea class="input-text" name="meaning" placeholder="Add word meaning..."></textarea>
+                <textarea class="input-text" name="meaning" formControlName="meaning" placeholder="Add word meaning..."></textarea>
             </div>
         </div>
         <div class="grid grid-cols-12">
             <div class="col-span-12">
                 <label class="input-label" for="examples"> Context examples: </label>
-                <textarea class="input-text" name="examples" placeholder="Add context examples..."></textarea>
+                <textarea class="input-text" name="examples"  formControlName="examples" placeholder="Add context examples..."></textarea>
             </div>
         </div>
         <div class="flex gap-5 justify-end">
             <button class="cancel-button" type="button"> Cancel </button>
-            <button class="submit-button" type="submit"> Add Word </button>
+            <button class="submit-button" type="submit" [disabled]="!wordForm.valid"> Add Word </button>
         </div>
     </form>
 </section>
