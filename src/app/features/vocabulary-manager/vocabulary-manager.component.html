@@ -29,3 +29,27 @@
         </div>
     </form>
 </section>
+
+<section class="bg-white m-10 rounded-md p-5 text-sky-900">
+    <table class="w-full">
+        <thead>
+            <tr class="text-left text-white bg-sky-700">
+                <th class="border p-5 border-gray-200">Word</th>
+                <th class="border p-5 border-gray-200">Translation</th>
+                <th class="border p-5 border-gray-200">Meaning</th>
+                <th class="border p-5 border-gray-200">Context Examples</th>
+                <th class="border p-5 border-gray-200">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (word of words; track word.id) {
+                <tr class="border rounded-md border-gray-100 p-10">
+                    <td class="p-3">{{ word.word }}</td>
+                    <td class="p-3">{{ word.translation }}</td>
+                    <td class="p-3">{{ word.meaning }}</td>
+                    <td class="p-3">{{ word.examples }}</td>
+                </tr>
+            }  
+        </tbody>
+    </table>
+</section>

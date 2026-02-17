@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
-import {  FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { VocabularyManagerService } from '../../shared/services/vocabulary-manager.service';
+import { Word } from '../../shared/models/word.model';
+
 @Component({
   selector: 'app-vocabulary-manager',
   standalone: true,
@@ -8,12 +10,19 @@ import { VocabularyManagerService } from '../../shared/services/vocabulary-manag
   templateUrl: './vocabulary-manager.component.html',
   styleUrl: './vocabulary-manager.component.scss'
 })
-export class VocabularyManagerComponent {
+export class VocabularyManagerComponent implements OnInit {
 
-  constructor(
+  words: Word[] = [];
+
+  constructor (
     private service : VocabularyManagerService,
     private formBuilder: FormBuilder,
    ) { }
+
+
+  ngOnInit() {
+    this.getWords();
+  }
 
   wordForm = this.formBuilder.nonNullable.group({
     word: ['', Validators.required],
@@ -21,6 +30,17 @@ export class VocabularyManagerComponent {
     meaning: [''],
     examples: [''],
   });
+
+  getWords(){
+    this.service.getWords().subscribe({
+      next: (words) => {
+        this.words = words;
+      },
+      error: (err) => {
+        console.error('Error fetching words:', err.message);
+      }
+    })
+  }
 
   onSubmit() {
 
@@ -42,6 +62,7 @@ export class VocabularyManagerComponent {
       next: () => {
         console.log("salvo")
         this.wordForm.reset();
+        this.getWords();
       },
       error: (err) => {
         console.error('Error inserting word:', err.message);

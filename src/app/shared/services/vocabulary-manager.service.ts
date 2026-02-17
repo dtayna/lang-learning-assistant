@@ -17,4 +17,8 @@ export class VocabularyManagerService {
     insertWord(word: InsertWord): Observable<Word[]> {
         return this.http.post<Word[]>(this.api, word);
     }
+
+    getWords(): Observable<Word[]> {
+        return this.http.get<Word[]>(this.api);
+    }
 }
