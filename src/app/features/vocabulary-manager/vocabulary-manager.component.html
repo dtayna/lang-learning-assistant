@@ -35,7 +35,21 @@
         <thead>
             <tr class="text-left text-white bg-sky-700">
                 <th class="border p-5 border-gray-200">Word</th>
-                <th class="border p-5 border-gray-200">Translation</th>
+                <th class="border p-5 border-gray-200">
+                    <div class="flex items-center">
+                        <span>Translation</span>
+                    
+                        <button
+                          class="ml-auto"
+                          (click)="onTranslationVisibilityToggle()">
+                    
+                          <mat-icon
+                            [fontIcon]="translationVisible ? 'visibility_off' : 'visibility'">
+                          </mat-icon>
+                    
+                        </button>
+                      </div>
+                </th>
                 <th class="border p-5 border-gray-200">Meaning</th>
                 <th class="border p-5 border-gray-200">Context Examples</th>
                 <th class="border p-5 border-gray-200">Actions</th>
@@ -44,8 +58,10 @@
         <tbody>
             @for (word of words; track word.id) {
                 <tr class="border rounded-md border-gray-100">
-                    <td class="p-3">{{ word.word }}</td>
-                    <td class="p-3">{{ word.translation }}</td>
+                    <td class="p-3 font-bold bg-sky-100">{{ word.word }}</td>
+                    <td class="p-3 text-orange-500 bg-orange-100">
+                        {{ translationVisible ? word.translation: "--" }}
+                    </td>
                     <td class="p-3">{{ word.meaning }}</td>
                     <td class="p-3">{{ word.examples }}</td>
                     <td class="text-center">

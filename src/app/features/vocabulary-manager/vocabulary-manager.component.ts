@@ -14,6 +14,7 @@ import { MatIcon } from "@angular/material/icon";
 export class VocabularyManagerComponent implements OnInit {
 
   words: Word[] = [];
+  translationVisible: boolean = true;
 
   constructor (
     private service : VocabularyManagerService,
@@ -82,6 +83,10 @@ export class VocabularyManagerComponent implements OnInit {
         console.error('Error deleting word:', err.message);
       }
     });
+  }
+
+  onTranslationVisibilityToggle() {
+    this.translationVisible = !this.translationVisible;
   }
 
 }
