@@ -14,11 +14,15 @@ export class VocabularyManagerService {
 
     constructor(private http: HttpClient) {}
 
-    insertWord(word: InsertWord): Observable<Word[]> {
+    insertWord( word : InsertWord ): Observable<Word[]> {
         return this.http.post<Word[]>(this.api, word);
     }
 
     getWords(): Observable<Word[]> {
         return this.http.get<Word[]>(this.api);
+    }
+
+    deleteWord( id : number ): Observable<Word[]> {
+        return this.http.delete<Word[]>(`${this.api}?id=eq.${id}`);
     }
 }

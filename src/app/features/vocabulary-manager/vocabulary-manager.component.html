@@ -43,11 +43,16 @@
         </thead>
         <tbody>
             @for (word of words; track word.id) {
-                <tr class="border rounded-md border-gray-100 p-10">
+                <tr class="border rounded-md border-gray-100">
                     <td class="p-3">{{ word.word }}</td>
                     <td class="p-3">{{ word.translation }}</td>
                     <td class="p-3">{{ word.meaning }}</td>
                     <td class="p-3">{{ word.examples }}</td>
+                    <td class="text-center">
+                        <button class="items-center justify-center" (click)="onDelete(word.id)"> 
+                            <mat-icon fontIcon="delete" class="delete-icon"></mat-icon>
+                        </button>
+                    </td>
                 </tr>
             }  
         </tbody>
