@@ -6,11 +6,13 @@ import { CEFRLevel } from '../../core/config/progress-config';
 import { MatIcon } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { Hour, InsertHour } from '../../shared/models/progress.model';
+import { NgxMaskDirective } from 'ngx-mask';
+import { TimeService } from '../../shared/utils/time.service';
 
 @Component({
   selector: 'app-progress-manager',
   standalone: true,
-  imports: [ReactiveFormsModule, MatIcon, CommonModule],
+  imports: [ReactiveFormsModule, MatIcon, CommonModule, NgxMaskDirective],
   templateUrl: './progress-manager.component.html',
   styleUrl: './progress-manager.component.scss'
 })
@@ -19,14 +21,15 @@ export class ProgressManagerComponent implements OnInit {
   exposureHours: Hour[] = [];
 
   exposureHoursForm = this.formBuilder.group({
-    exposureHours : [0, [Validators.required, Validators.min(0)]],
+    exposureHours : ['', [Validators.required]],
     exposureType: this.formBuilder.array([]) ,
     description : ['']
   });
 
   constructor (
     private formBuilder : NonNullableFormBuilder,
-    private service : ProgressManagerService
+    private service : ProgressManagerService,
+    private timeService: TimeService
     ){}
 
   ngOnInit() {
@@ -53,7 +56,7 @@ export class ProgressManagerComponent implements OnInit {
     const formValue = this.exposureHoursForm.getRawValue();
 
     const hourPayload: InsertHour = {
-      exposureHours: formValue.exposureHours,
+      exposureHours: this.timeService.timeStringToFloat(formValue.exposureHours.toString()),
       exposureType: formValue.exposureType.join(', '),
       description: formValue.description || null,
     };
@@ -94,4 +97,9 @@ export class ProgressManagerComponent implements OnInit {
       }
     });
   }
+
+  timeConverter(time: number): string {
+    return this.timeService.timeFloatToString(time);
+  }
+
 }

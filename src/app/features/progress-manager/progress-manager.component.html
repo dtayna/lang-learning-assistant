@@ -6,7 +6,7 @@
                 <label class="input-label" for="exposureHour"> 
                     <span class="text-red-500">*</span> Exposure time: 
                 </label>
-                <input class="input-text" name="exposureHour" formControlName="exposureHours" type="text" placeholder="Add time..." >
+                <input class="input-text" name="exposureHour" formControlName="exposureHours" type="text" mask="00:00" placeholder="Add time..." >
             </div>
             <div class="col-span-6">
                 <label class="input-label">
@@ -76,7 +76,7 @@
         <tbody>
             @for (exposureHour of exposureHours; track exposureHour.id) {
                 <tr class="border rounded-md border-gray-100">
-                    <td class="p-3 font-bold bg-sky-100">{{ exposureHour.exposureHours }}</td>
+                    <td class="p-3 font-bold bg-sky-100">{{ timeConverter(exposureHour.exposureHours)}}</td>
                     <td class="p-3">{{ exposureHour.exposureType }}</td>
                     <td class="p-3">{{ exposureHour.description }}</td>
                     <td class="p-3">{{ exposureHour.created_at ? (exposureHour.created_at | date:'dd/MM/yyyy HH:mm') : '--' }}</td>
