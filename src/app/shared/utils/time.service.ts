@@ -23,6 +23,6 @@ export class TimeService {
         const decimalMinutes = hours - time;
         const minutes = Math.abs(decimalMinutes * 60);
         
-        return hours + ":" + (minutes < 10 ? "0" + minutes : minutes);
+        return hours + ":" + (minutes < 10 ? "0" + Math.floor(minutes) : Math.floor(minutes));
       }
 }
