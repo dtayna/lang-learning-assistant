@@ -19,6 +19,8 @@ import { TimeService } from '../../shared/utils/time.service';
 export class ProgressManagerComponent implements OnInit {
 
   exposureHours: Hour[] = [];
+  totalExposureHours: number = 0;
+  level : CEFRLevel = 'A1';
 
   exposureHoursForm = this.formBuilder.group({
     exposureHours : ['', [Validators.required]],
@@ -29,11 +31,13 @@ export class ProgressManagerComponent implements OnInit {
   constructor (
     private formBuilder : NonNullableFormBuilder,
     private service : ProgressManagerService,
+    private progressConfigService : ProgressConfigService,
     private timeService: TimeService
     ){}
 
   ngOnInit() {
       this.getExposureHours();
+      this.getTotalExposureHours();
   }
 
   getExposureHours(){
@@ -96,6 +100,24 @@ export class ProgressManagerComponent implements OnInit {
         console.error('Error deleting exposure hours:', err.message);
       }
     });
+  }
+
+  getTotalExposureHours() {
+    this.service.getTotalHours().subscribe({
+      next: (totalExposureHours) => {
+        this.totalExposureHours = totalExposureHours || 0;
+        this.level = this.getLevelByHours();
+      },
+      error: (err) => {
+        console.error('Error fetching total exposure hours:', err.message);
+      }
+    });
+  }
+
+  getLevelByHours(): CEFRLevel {
+    return this.totalExposureHours > 0
+      ? this.progressConfigService.getLevelFromExposureHours(this.totalExposureHours)
+      : 'A1';
   }
 
   timeConverter(time: number): string {

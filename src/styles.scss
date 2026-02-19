@@ -26,6 +26,10 @@
     .page-title{
         @apply text-3xl m-10 text-sky-900;
     }
+
+    .page-section{
+        @apply bg-white m-10 rounded-md p-5 text-sky-900;
+    }
   }
 
 .delete-icon{

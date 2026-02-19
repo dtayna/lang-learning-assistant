@@ -28,4 +28,9 @@ export class ProgressManagerService {
         return this.http.delete<Hour[]>(`${this.apiHours}?id=eq.${id}`);
     }
 
+    getTotalHours(): Observable<number> {
+        const url = `${environment.apiUrl}/rpc/get_total_exposure`;
+        return this.http.post<number>(url, {});
+    }
+
 }
