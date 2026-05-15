@@ -1,6 +1,8 @@
 # LangLearningAssistant
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.3.
+<img width="2852" height="1511" alt="image" src="https://github.com/user-attachments/assets/5dbe4b14-2d94-4851-9872-1d660d2fd80f" />
+
+Angular CLI version 18.0.3.
 
 ## Development server
 
