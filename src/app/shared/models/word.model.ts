@@ -5,7 +5,7 @@ export interface Word {
     meaning?: string;
     examples?: string;
     image?: string;
-    created_at?: string;
+    created_at?: Date | null;
   }
   
 

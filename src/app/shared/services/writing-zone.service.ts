@@ -35,6 +35,6 @@ export class WritingZoneService {
     }
 
     deleteNote( id : number ): Observable<Note[]> {
-        return this.http.delete<Note[]>(`${this.api}?id=eq.${id}`);
+        return this.http.delete<Note[]>(`${this.api}/${id}`);
     }
 }

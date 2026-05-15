@@ -23,6 +23,6 @@ export class VocabularyManagerService {
     }
 
     deleteWord( id : number ): Observable<Word[]> {
-        return this.http.delete<Word[]>(`${this.api}?id=eq.${id}`);
+        return this.http.delete<Word[]>(`${this.api}/${id}`);
     }
 }
