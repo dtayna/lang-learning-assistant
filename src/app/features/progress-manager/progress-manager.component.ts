@@ -5,7 +5,7 @@ import { ProgressConfigService } from '../../core/config/progress-config.service
 import { CEFRLevel } from '../../core/config/progress-config';
 import { MatIcon } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { Hour, InsertHour } from '../../shared/models/progress.model';
+import { TimeProgress, InsertTimeProgress } from '../../shared/models/progress.model';
 import { NgxMaskDirective } from 'ngx-mask';
 import { TimeService } from '../../shared/utils/time.service';
 
@@ -18,7 +18,7 @@ import { TimeService } from '../../shared/utils/time.service';
 })
 export class ProgressManagerComponent implements OnInit {
 
-  exposureHours: Hour[] = [];
+  exposureHours: TimeProgress[] = [];
   totalExposureHours: number = 0;
   level : CEFRLevel = 'A1';
 
@@ -36,12 +36,12 @@ export class ProgressManagerComponent implements OnInit {
     ){}
 
   ngOnInit() {
-      this.getExposureHours();
+      this.getTimeProgress();
       this.getTotalExposureHours();
   }
 
-  getExposureHours(){
-    this.service.getExposureHours().subscribe({
+  getTimeProgress(){
+    this.service.getTimeProgress().subscribe({
       next: (hours) => {
         this.exposureHours = hours;
       },
@@ -59,19 +59,20 @@ export class ProgressManagerComponent implements OnInit {
 
     const formValue = this.exposureHoursForm.getRawValue();
 
-    const hourPayload: InsertHour = {
+    const hourPayload: InsertTimeProgress = {
       exposureHours: this.timeService.timeStringToFloat(formValue.exposureHours.toString()),
       exposureType: formValue.exposureType.join(', '),
       description: formValue.description || null,
     };
 
-    this.service.insertExposureHours(hourPayload).subscribe({
+    this.service.insertTimeProgress(hourPayload).subscribe({
       next: () => {
-        this.getExposureHours();
+        this.getTimeProgress();
         this.exposureHoursForm.reset();
       },
       error: (err) => {
         console.error('Error inserting exposure hours:', err.message);
+        console.error('FastAPI detail:', err.error);
       }
     });
   }
@@ -92,9 +93,9 @@ export class ProgressManagerComponent implements OnInit {
   }
 
   onDelete( id : number ){
-    this.service.deleteExposureHours(id).subscribe({ 
+    this.service.deleteTimeProgress(id).subscribe({ 
       next : () => {
-        this.getExposureHours();
+        this.getTimeProgress();
       },
       error: (err) => {
         console.error('Error deleting exposure hours:', err.message);
@@ -103,7 +104,7 @@ export class ProgressManagerComponent implements OnInit {
   }
 
   getTotalExposureHours() {
-    this.service.getTotalHours().subscribe({
+    this.service.getTotalTimeProgress().subscribe({
       next: (totalExposureHours) => {
         this.totalExposureHours = totalExposureHours || 0;
         this.level = this.getLevelByHours();

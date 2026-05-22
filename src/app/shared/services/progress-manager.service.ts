@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Hour, InsertHour } from '../models/progress.model';
+import { TimeProgress, InsertTimeProgress} from '../models/progress.model';
 import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
 
@@ -12,25 +12,24 @@ import { map } from 'rxjs/operators';
 export class ProgressManagerService {
 
     private apiProgress = `${environment.apiUrl}/progress`;
-    private apiHours = `${environment.apiUrl}/hours`;
+    private apiTimeProgress = `${environment.apiUrl}/time_progress`;
 
     constructor(private http: HttpClient) {}
 
-    insertExposureHours( hour : InsertHour ): Observable<Hour[]> {
-        return this.http.post<Hour[]>(this.apiHours, hour);
+    insertTimeProgress( time_progress : InsertTimeProgress ): Observable<TimeProgress[]> {
+        return this.http.post<TimeProgress[]>(this.apiTimeProgress, time_progress);
     }
 
-    getExposureHours(): Observable<Hour[]> {
-        return this.http.get<Hour[]>(this.apiHours);
+    getTimeProgress(): Observable<TimeProgress[]> {
+        return this.http.get<TimeProgress[]>(this.apiTimeProgress);
     }
 
-    deleteExposureHours( id : number ): Observable<Hour[]> {
-        return this.http.delete<Hour[]>(`${this.apiHours}?id=eq.${id}`);
+    deleteTimeProgress( id : number ): Observable<TimeProgress[]> {
+        return this.http.delete<TimeProgress[]>(`${this.apiTimeProgress}/${id}`);
     }
 
-    getTotalHours(): Observable<number> {
-        const url = `${environment.apiUrl}/rpc/get_total_exposure`;
-        return this.http.post<number>(url, {});
+    getTotalTimeProgress(): Observable<number> {
+        return this.http.post<number>(`${this.apiTimeProgress}/get_total_time_progress`, {});
     }
 
 }
