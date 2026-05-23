@@ -1,17 +1,23 @@
 # LangLearningAssistant
 
+A language learning assistant focused on organizing vocabulary, tracking study progress, and managing language exposure hours.
+This project was developed as a full-stack application using Angular for the front-end and FastAPI for the back-end.
+
 <img width="2879" height="1537" alt="image" src="https://github.com/user-attachments/assets/34ff4ce7-9fe7-4527-b32b-194ae2ce1224" />
 
 
 
 ## Stack
 
-Front-end Angular CLI version 18.0.3.
-- TypeScript
-- Scss
-- Tailwind CSS
+### Front-end
+Angular 18.0.3
+TypeScript
+SCSS
+Tailwind CSS
 
-Back-end developed with Python + FastAPI
+### Back-end
+Python
+FastAPI
 
 ## Development server
 
