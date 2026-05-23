@@ -63,6 +63,11 @@
 </section>
 
 <section class="page-section grid grid-cols-12">
+  <div class="col-span-12 flex flex-col">
+    <app-skill-distribution></app-skill-distribution>
+  </div>
+</section>
+<section class="page-section grid grid-cols-12">
   <div class="col-span-6 flex flex-col">
     <div> {{ totalExposureHours ? 'Total Exposure Time: ' + timeConverter(totalExposureHours) : '' }} </div>
     <div> {{ level ? 'Level: ' + level : '' }}  </div>

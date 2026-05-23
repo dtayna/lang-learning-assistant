@@ -1,0 +1,81 @@
+@use "tailwindcss";
+
+  .bar {
+    position: relative;
+    width: 100%;
+    height: 24px;
+    border-radius: 999px;
+    background: #ddd;
+    margin: 32px 0;
+    user-select: none;
+    touch-action: none;
+    overflow: hidden;
+  }
+  
+  .segment {
+    position: absolute;
+    top: 0;
+    height: 100%;
+  }
+  
+  .listening {
+    background: #60a5fa;
+  }
+  
+  .reading {
+    background: #34d399;
+  }
+  
+  .writing {
+    background: #fbbf24;
+  }
+  
+  .speaking {
+    background: #f87171;
+  }
+  
+  .handle {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 3px solid white;
+    @apply bg-sky-900;
+    cursor: grab;
+    z-index: 2;
+  }
+  
+  .handle:active {
+    cursor: grabbing;
+  }
+  
+  .legend {
+    display: grid;
+    gap: 8px;
+  }
+  
+  .dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+  
+  .dot.listening {
+    background: #60a5fa;
+  }
+  
+  .dot.reading {
+    background: #34d399;
+  }
+  
+  .dot.writing {
+    background: #fbbf24;
+  }
+  
+  .dot.speaking {
+    background: #f87171;
+  }

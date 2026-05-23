@@ -1,6 +1,7 @@
 # LangLearningAssistant
 
-<img width="2852" height="1511" alt="image" src="https://github.com/user-attachments/assets/5dbe4b14-2d94-4851-9872-1d660d2fd80f" />
+<img width="2879" height="1537" alt="image" src="https://github.com/user-attachments/assets/34ff4ce7-9fe7-4527-b32b-194ae2ce1224" />
+
 
 
 ## Stack

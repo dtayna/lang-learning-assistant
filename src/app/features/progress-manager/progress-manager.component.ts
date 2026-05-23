@@ -8,11 +8,12 @@ import { CommonModule } from '@angular/common';
 import { TimeProgress, InsertTimeProgress } from '../../shared/models/progress.model';
 import { NgxMaskDirective } from 'ngx-mask';
 import { TimeService } from '../../shared/utils/time.service';
+import { SkillDistributionComponent } from '../user-settings/skill-distribution/skill-distribution.component';
 
 @Component({
   selector: 'app-progress-manager',
   standalone: true,
-  imports: [ReactiveFormsModule, MatIcon, CommonModule, NgxMaskDirective],
+  imports: [ReactiveFormsModule, MatIcon, CommonModule, NgxMaskDirective, SkillDistributionComponent],
   templateUrl: './progress-manager.component.html',
   styleUrl: './progress-manager.component.scss'
 })
