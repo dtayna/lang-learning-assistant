@@ -11,15 +11,15 @@ This project was developed as a full-stack application using Angular for the fro
 
 ### Front-end
 
-Angular 18.0.3
-TypeScript
-SCSS
-Tailwind CSS
+- Angular 18.0.3
+- TypeScript
+- SCSS
+- Tailwind CSS
 
 ### Back-end
 
-Python
-FastAPI
+- Python
+- FastAPI
 
 ## Development server
 
