@@ -1,7 +1,7 @@
 # LangLearningAssistant
 
 A language learning assistant focused on organizing vocabulary, tracking study progress, and managing language exposure hours.
-This project was developed as a full-stack application using Angular for the front-end and FastAPI for the back-end.
+This project was developed as a full-stack application using Angular for the front-end and FastAPI for the back-end ([repo](https://github.com/dtayna/api-lang-learning-assistant)).
 
 <img width="2879" height="1537" alt="image" src="https://github.com/user-attachments/assets/34ff4ce7-9fe7-4527-b32b-194ae2ce1224" />
 
