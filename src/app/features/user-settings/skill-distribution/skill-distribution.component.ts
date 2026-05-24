@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 type Skill = 'Listening' | 'Reading' | 'Writing' | 'Speaking';
 
@@ -11,22 +11,26 @@ const MIN_GAP = 5;
   styleUrl: './skill-distribution.component.scss',
 })
 export class SkillDistributionComponent {
-  handles = [25, 50, 75];
 
-  skills: Skill[] = ['Listening', 'Reading', 'Writing', 'Speaking'];
+  handles = signal([25, 50, 75]);
+  activeHandle = signal<number | null>(null);
 
-  activeHandle: number | null = null;
+  readonly skills: Skill[] = ['Listening', 'Reading', 'Writing', 'Speaking'];
+
 
   startDrag(handle: number) {
-    this.activeHandle = handle;
+    this.activeHandle.set(handle);
   }
 
   stopDrag() {
-    this.activeHandle = null;
+    this.activeHandle.set(null);
   }
 
   onDrag(event: PointerEvent, bar: HTMLElement) {
-    if (this.activeHandle === null) return;
+    const handles = this.handles();
+    const activeHandle = this.activeHandle();
+
+    if (activeHandle === null) return;
 
     const {left, width} = bar.getBoundingClientRect(); 
     const pointerX = event.clientX;
@@ -36,24 +40,28 @@ export class SkillDistributionComponent {
     let percent = this.clamp(0, 100, rawPercent)
 
     const previous =
-      this.activeHandle === 0 ? 0 : this.handles[this.activeHandle - 1] + MIN_GAP;
+    activeHandle === 0 ? 0 : handles[activeHandle - 1] + MIN_GAP;
 
     const next =
-      this.activeHandle === this.handles.length - 1
+    activeHandle === handles.length - 1
         ? 100
-        : this.handles[this.activeHandle + 1] - MIN_GAP;
+        : handles[activeHandle + 1] - MIN_GAP;
 
     percent = this.clamp(previous, next, percent);
 
-    this.handles[this.activeHandle] = percent;
+    this.handles.update(handles => 
+      handles.map((handle, index) => 
+        index === activeHandle ?
+        percent :
+        handle));
   }
 
   getPercentages() {
     return [
-      this.handles[0],
-      this.handles[1] - this.handles[0],
-      this.handles[2] - this.handles[1],
-      100 - this.handles[2],
+      this.handles()[0],
+      this.handles()[1] - this.handles()[0],
+      this.handles()[2] - this.handles()[1],
+      100 - this.handles()[2],
     ].map(value => Math.round(value));
   }
 
@@ -69,10 +77,4 @@ export class SkillDistributionComponent {
     return Math.max(min, Math.min(max, value))
   }
 
-  skillPercentages = {
-    listening : 25,
-    reading : 25,
-    writing : 25,
-    speaking : 25
-  }
 }
