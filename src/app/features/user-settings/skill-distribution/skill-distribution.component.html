@@ -1,54 +1,54 @@
 <div>
-    <h3>Skill Distribution</h3>
-  
+  <h3>Skill Distribution</h3>
+
+  <div
+    #bar
+    class="bar"
+    (pointermove)="onDrag($event, bar)"
+    (pointerup)="stopDrag()"
+    (pointerleave)="stopDrag()"
+  >
     <div
-      #bar
-      class="bar"
-      (pointermove)="onDrag($event, bar)"
-      (pointerup)="stopDrag()"
-      (pointerleave)="stopDrag()"
-    >
-      <div
-        class="segment listening"
-        [style.left.%]="0"
-        [style.width.%]="handles()[0]"
-      ></div>
-  
-      <div
-        class="segment reading"
-        [style.left.%]="handles()[0]"
-        [style.width.%]="handles()[1] - handles()[0]"
-      ></div>
-  
-      <div
-        class="segment writing"
-        [style.left.%]="handles()[1]"
-        [style.width.%]="handles()[2] - handles()[1]"
-      ></div>
-  
-      <div
-        class="segment speaking"
-        [style.left.%]="handles()[2]"
-        [style.width.%]="100 - handles()[2]"
-      ></div>
-  
-      @for (handle of handles(); track $index) {
+      class="segment listening"
+      [style.left.%]="0"
+      [style.width.%]="handles()[0]"
+    ></div>
+
+    <div
+      class="segment reading"
+      [style.left.%]="handles()[0]"
+      [style.width.%]="handles()[1] - handles()[0]"
+    ></div>
+
+    <div
+      class="segment writing"
+      [style.left.%]="handles()[1]"
+      [style.width.%]="handles()[2] - handles()[1]"
+    ></div>
+
+    <div
+      class="segment speaking"
+      [style.left.%]="handles()[2]"
+      [style.width.%]="100 - handles()[2]"
+    ></div>
+
+    @for (handle of handles(); track $index) {
       <button
-        class="handle"
+        class="handle bg-sky-900"
         [style.left.%]="handle"
         (pointerdown)="startDrag($index)"
       ></button>
-        }
-    </div>
-  
-    <div class="legend">
-      <div class="flex flex-row gap-10 mt-2">
-        @for (skill of skills; track $index) {
-            <div>
-                <span class="dot" [class]="skill.toLowerCase()"></span>
-                {{ skill }}: {{ getPercentages()[$index] }}%
-            </div>
-         }
-      </div>   
+    }
+  </div>
+
+  <div class="legend">
+    <div class="flex flex-row gap-10 mt-2">
+      @for (skill of skills; track $index) {
+        <div>
+          <span class="dot" [class]="skill.toLowerCase()"></span>
+          {{ skill }}: {{ getPercentages()[$index] }}%
+        </div>
+      }
     </div>
   </div>
+</div>

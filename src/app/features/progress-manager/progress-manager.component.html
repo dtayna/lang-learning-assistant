@@ -1,65 +1,83 @@
 <h1 class="page-title">My Progress</h1>
 <section class="page-section">
-    <form class="flex flex-col gap-5" [formGroup]="exposureHoursForm" (ngSubmit)="onSubmit()">
-        <div class="grid grid-cols-12 gap-5">
-            <div class="col-span-3">
-                <label class="input-label" for="exposureHour"> 
-                    <span class="text-red-500">*</span> Exposure time: 
-                </label>
-                <input class="input-text" name="exposureHour" formControlName="exposureHours" type="text" mask="00:00" placeholder="Add time..." >
-            </div>
-            <div class="col-span-6">
-                <label class="input-label">
-                  <span class="text-red-500">*</span> Type:
-                </label>
-              
-                <div class="flex flex-wrap gap-4 mt-2">
-              
-                  <label class="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      value="listening"
-                      (change)="onCheckboxChange($event)">
-                    Listening
-                  </label>
-              
-                  <label class="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      value="speaking"
-                      (change)="onCheckboxChange($event)">
-                    Speaking
-                  </label>
-              
-                  <label class="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      value="reading"
-                      (change)="onCheckboxChange($event)">
-                    Reading
-                  </label>
-              
-                  <label class="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      value="writing"
-                      (change)="onCheckboxChange($event)">
-                    Writing
-                  </label>
-              
-                </div>
-              </div>
-              
-            <div class="col-span-12">
-                <label class="input-label" for="description"> Description: </label>
-                <textarea class="input-text" name="description" formControlName="description" placeholder="Add a description..."></textarea>
-            </div>
+  <form
+    class="flex flex-col gap-5"
+    [formGroup]="exposureHoursForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="grid grid-cols-12 gap-5">
+      <div class="col-span-3">
+        <label class="input-label" for="exposureHour">
+          <span class="text-red-500">*</span> Exposure time:
+        </label>
+        <input
+          class="input-text"
+          name="exposureHour"
+          formControlName="exposureHours"
+          type="text"
+          mask="00:00"
+          placeholder="Add time..."
+        />
+      </div>
+      <div class="col-span-6">
+        <label class="input-label">
+          <span class="text-red-500">*</span> Type:
+        </label>
+
+        <div class="flex flex-wrap gap-4 mt-2">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              value="listening"
+              (change)="onCheckboxChange($event)"
+            />
+            Listening
+          </label>
+
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              value="speaking"
+              (change)="onCheckboxChange($event)"
+            />
+            Speaking
+          </label>
+
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              value="reading"
+              (change)="onCheckboxChange($event)"
+            />
+            Reading
+          </label>
+
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              value="writing"
+              (change)="onCheckboxChange($event)"
+            />
+            Writing
+          </label>
         </div>
-        <div class="flex gap-5 justify-end">
-            <button class="cancel-button" type="button"> Cancel </button>
-            <button class="submit-button" type="submit"> Add Progress </button>
-        </div>
-    </form>
+      </div>
+
+      <div class="col-span-12">
+        <label class="input-label" for="description"> Description: </label>
+        <textarea
+          class="input-text"
+          name="description"
+          formControlName="description"
+          placeholder="Add a description..."
+        ></textarea>
+      </div>
+    </div>
+    <div class="flex gap-5 justify-end">
+      <button class="cancel-button" type="button">Cancel</button>
+      <button class="submit-button" type="submit">Add Progress</button>
+    </div>
+  </form>
 </section>
 
 <section class="page-section grid grid-cols-12">
@@ -69,37 +87,53 @@
 </section>
 <section class="page-section grid grid-cols-12">
   <div class="col-span-6 flex flex-col">
-    <div> {{ totalExposureHours ? 'Total Exposure Time: ' + timeConverter(totalExposureHours) : '' }} </div>
-    <div> {{ level ? 'Level: ' + level : '' }}  </div>
+    <div>
+      {{
+        totalExposureHours
+          ? 'Total Exposure Time: ' + timeConverter(totalExposureHours)
+          : ''
+      }}
+    </div>
+    <div>{{ level ? 'Level: ' + level : '' }}</div>
   </div>
 </section>
 
 <section class="page-section">
-    <table class="w-full">
-        <thead>
-            <tr class="text-left text-white bg-sky-700">
-                <th class="border p-5 border-gray-200">Exposure Time</th>
-                <th class="border p-5 border-gray-200">Type</th>
-                <th class="border p-5 border-gray-200">Description</th>
-                <th class="border p-5 border-gray-200">Created At</th>
-                <th class="border p-5 border-gray-200">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (exposureHour of exposureHours; track exposureHour.id) {
-                <tr class="border rounded-md border-gray-100">
-                    <td class="p-3 font-bold bg-sky-100">{{ timeConverter(exposureHour.exposureHours)}}</td>
-                    <td class="p-3">{{ exposureHour.exposureType }}</td>
-                    <td class="p-3">{{ exposureHour.description }}</td>
-                    <td class="p-3">{{ exposureHour.created_at ? (exposureHour.created_at | date:'dd/MM/yyyy HH:mm') : '--' }}</td>
-                    <td class="text-center">
-                        <button class="items-center justify-center" (click)="onDelete(exposureHour.id)"> 
-                            <mat-icon fontIcon="delete" class="delete-icon"></mat-icon>
-                        </button>
-                    </td>
-                </tr>
-            }  
-        </tbody>
-    </table>
-
+  <table class="w-full">
+    <thead>
+      <tr class="text-left text-white bg-sky-700">
+        <th class="border p-5 border-gray-200">Exposure Time</th>
+        <th class="border p-5 border-gray-200">Type</th>
+        <th class="border p-5 border-gray-200">Description</th>
+        <th class="border p-5 border-gray-200">Created At</th>
+        <th class="border p-5 border-gray-200">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (exposureHour of exposureHours; track exposureHour.id) {
+        <tr class="border rounded-md border-gray-100">
+          <td class="p-3 font-bold bg-sky-100">
+            {{ timeConverter(exposureHour.exposureHours) }}
+          </td>
+          <td class="p-3">{{ exposureHour.exposureType }}</td>
+          <td class="p-3">{{ exposureHour.description }}</td>
+          <td class="p-3">
+            {{
+              exposureHour.created_at
+                ? (exposureHour.created_at | date: 'dd/MM/yyyy HH:mm')
+                : '--'
+            }}
+          </td>
+          <td class="text-center">
+            <button
+              class="items-center justify-center"
+              (click)="onDelete(exposureHour.id)"
+            >
+              <mat-icon fontIcon="delete" class="delete-icon"></mat-icon>
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
 </section>

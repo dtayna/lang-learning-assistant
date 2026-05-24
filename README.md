@@ -5,8 +5,6 @@ This project was developed as a full-stack application using Angular for the fro
 
 <img width="2879" height="1537" alt="image" src="https://github.com/user-attachments/assets/34ff4ce7-9fe7-4527-b32b-194ae2ce1224" />
 
-
-
 ## Stack
 
 ### Front-end

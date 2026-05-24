@@ -1,29 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { VocabularyManagerService } from '../../shared/services/vocabulary-manager.service';
-import { Word } from '../../shared/models/word.model';
-import { MatIcon } from "@angular/material/icon";
+import { Component, OnInit } from '@angular/core'
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
+import { VocabularyManagerService } from '../../shared/services/vocabulary-manager.service'
+import { Word } from '../../shared/models/word.model'
+import { MatIcon } from '@angular/material/icon'
 
 @Component({
   selector: 'app-vocabulary-manager',
   standalone: true,
   imports: [ReactiveFormsModule, MatIcon],
   templateUrl: './vocabulary-manager.component.html',
-  styleUrl: './vocabulary-manager.component.scss'
+  styleUrl: './vocabulary-manager.component.scss',
 })
 export class VocabularyManagerComponent implements OnInit {
+  words: Word[] = []
+  translationVisible: boolean = true
 
-  words: Word[] = [];
-  translationVisible: boolean = true;
-
-  constructor (
-    private service : VocabularyManagerService,
+  constructor(
+    private service: VocabularyManagerService,
     private formBuilder: FormBuilder,
-   ) { }
-
+  ) {}
 
   ngOnInit() {
-    this.getWords();
+    this.getWords()
   }
 
   wordForm = this.formBuilder.nonNullable.group({
@@ -31,27 +29,26 @@ export class VocabularyManagerComponent implements OnInit {
     translation: [''],
     meaning: [''],
     examples: [''],
-  });
+  })
 
-  getWords(){
+  getWords() {
     this.service.getWords().subscribe({
       next: (words) => {
-        this.words = words;
+        this.words = words
       },
       error: (err) => {
-        console.error('Error fetching words:', err.message);
-      }
+        console.error('Error fetching words:', err.message)
+      },
     })
   }
 
   onSubmit() {
-
     if (this.wordForm.invalid) {
-      this.wordForm.markAllAsTouched();
-      return;
+      this.wordForm.markAllAsTouched()
+      return
     }
 
-    const formValue = this.wordForm.getRawValue();
+    const formValue = this.wordForm.getRawValue()
 
     const wordPayload = {
       word: formValue.word,
@@ -62,31 +59,29 @@ export class VocabularyManagerComponent implements OnInit {
 
     this.service.insertWord(wordPayload).subscribe({
       next: () => {
-        console.log("salvo")
-        this.wordForm.reset();
-        this.getWords();
+        console.log('salvo')
+        this.wordForm.reset()
+        this.getWords()
       },
       error: (err) => {
-        console.error('Error inserting word:', err.message);
-      }
-
-    });
+        console.error('Error inserting word:', err.message)
+      },
+    })
   }
 
-  onDelete( id : number ) {
+  onDelete(id: number) {
     this.service.deleteWord(id).subscribe({
       next: () => {
-        console.log("deletado")
-        this.getWords();
-      }
-      , error: (err) => {
-        console.error('Error deleting word:', err.message);
-      }
-    });
+        console.log('deletado')
+        this.getWords()
+      },
+      error: (err) => {
+        console.error('Error deleting word:', err.message)
+      },
+    })
   }
 
   onTranslationVisibilityToggle() {
-    this.translationVisible = !this.translationVisible;
+    this.translationVisible = !this.translationVisible
   }
-
 }
