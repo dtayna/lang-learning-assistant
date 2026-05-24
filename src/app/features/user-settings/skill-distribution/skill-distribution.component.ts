@@ -12,44 +12,44 @@ const MIN_GAP = 2;
 })
 export class SkillDistributionComponent {
 
-  handles = signal([25, 50, 75]);
-  activeHandle = signal<number | null>(null);
+  handles = signal([25, 50, 75])
+  activeHandle = signal<number | null>(null)
 
-  readonly skills: Skill[] = ['Listening', 'Reading', 'Writing', 'Speaking'];
+  readonly skills: Skill[] = ['Listening', 'Reading', 'Writing', 'Speaking']
 
 
-  startDrag(handle: number) {
-    this.activeHandle.set(handle);
+  startDrag(handle : number) {
+    this.activeHandle.set(handle)
   }
 
   stopDrag() {
-    this.activeHandle.set(null);
+    this.activeHandle.set(null)
   }
 
-  onDrag(event: PointerEvent, bar: HTMLElement) {
+  onDrag(event : PointerEvent, bar : HTMLElement) {
 
-    const activeHandle = this.activeHandle();
-    if (activeHandle === null) return;
+    const activeHandle = this.activeHandle()
+    if (activeHandle === null) return
 
-    const handles = this.handles();
+    const handles = this.handles()
 
-    const {left, width} = bar.getBoundingClientRect(); 
-    const pointerX = event.clientX;
+    const {left, width} = bar.getBoundingClientRect()
+    const pointerX = event.clientX
 
-    const x = this.getRelativeX(pointerX, left);
+    const x = this.getRelativeX(pointerX, left)
     const rawPercent = this.calculatePercentage(x, width)
 
     const previous =
     activeHandle === 0 
-        ? 0 
-        : handles[activeHandle - 1] + MIN_GAP;
+      ? 0 
+      : handles[activeHandle - 1] + MIN_GAP
 
     const next =
     activeHandle === handles.length - 1
-        ? 100
-        : handles[activeHandle + 1] - MIN_GAP;
+      ? 100
+      : handles[activeHandle + 1] - MIN_GAP
 
-    const percent = this.clamp(previous, next, rawPercent);
+    const percent = this.clamp(previous, next, rawPercent)
 
     this.handles.update(handles => 
       handles.map((handle, index) => 
@@ -64,15 +64,15 @@ export class SkillDistributionComponent {
       this.handles()[1] - this.handles()[0],
       this.handles()[2] - this.handles()[1],
       100 - this.handles()[2],
-    ].map(value => Math.round(value));
+    ].map(value => Math.round(value))
   }
 
   private getRelativeX(pointerX: number, start: number) : number {
-    return pointerX - start;
+    return pointerX - start
   }
 
   private calculatePercentage(part: number, whole: number) : number {
-    return (part / whole) * 100;
+    return (part / whole) * 100
   }
 
   private clamp(min: number, max: number, value: number) : number {
