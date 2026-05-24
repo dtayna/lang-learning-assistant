@@ -2,7 +2,7 @@ import { Component, signal } from '@angular/core';
 
 type Skill = 'Listening' | 'Reading' | 'Writing' | 'Speaking';
 
-const MIN_GAP = 5;
+const MIN_GAP = 2;
 
 @Component({
   selector: 'app-skill-distribution',
@@ -27,33 +27,35 @@ export class SkillDistributionComponent {
   }
 
   onDrag(event: PointerEvent, bar: HTMLElement) {
-    const handles = this.handles();
-    const activeHandle = this.activeHandle();
 
+    const activeHandle = this.activeHandle();
     if (activeHandle === null) return;
+
+    const handles = this.handles();
 
     const {left, width} = bar.getBoundingClientRect(); 
     const pointerX = event.clientX;
 
     const x = this.getRelativeX(pointerX, left);
     const rawPercent = this.calculatePercentage(x, width)
-    let percent = this.clamp(0, 100, rawPercent)
 
     const previous =
-    activeHandle === 0 ? 0 : handles[activeHandle - 1] + MIN_GAP;
+    activeHandle === 0 
+        ? 0 
+        : handles[activeHandle - 1] + MIN_GAP;
 
     const next =
     activeHandle === handles.length - 1
         ? 100
         : handles[activeHandle + 1] - MIN_GAP;
 
-    percent = this.clamp(previous, next, percent);
+    const percent = this.clamp(previous, next, rawPercent);
 
     this.handles.update(handles => 
       handles.map((handle, index) => 
-        index === activeHandle ?
-        percent :
-        handle));
+        index === activeHandle 
+          ? percent 
+          : handle));
   }
 
   getPercentages() {
